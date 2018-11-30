@@ -16,9 +16,9 @@ log.info('Logging in with ' + username + ' and ' + password);
   const cookies = await fetchCookies();
   const classes = await getClasses(cookies, 182, 500);
   log.info(classes);
-  for (let course in classes) {
+  classes.forEach(course => {
     log.info('https://cs.harding.edu/easel/cgi-bin/class?id=' + course);
-  }
+  });
 })();
 
 async function getClasses (cookies, start, end) {
@@ -38,7 +38,7 @@ async function getClasses (cookies, start, end) {
       if (error.textContent === 'Missing required information') {
         // Class probably doesn't exist
         log.info('Nonexistent class');
-        if (emptyClasses < 10) {
+        if (emptyClasses < 3) {
           emptyClasses++;
         } else {
           break;
